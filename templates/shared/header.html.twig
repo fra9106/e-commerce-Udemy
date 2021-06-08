@@ -49,18 +49,27 @@
 									<span>Wishlist</span>
 								</a>
 							</li>
-							<li>
-								<a href="">
-									<i class="ti-user"></i>
-									<span>Login</span>
-								</a>
-							</li>
-							<li>
-								<a href="{{ path('app_register') }}">
-									<i class="fas fa-sign-in-alt"></i>
-									<span>Register</span>
-								</a>
-							</li>
+							{% if app.user %}
+								<li>
+									<a href="{{ path('app_logout') }}">
+										<i class="ti-user"></i>
+										<span>Logout</span>
+									</a>
+								</li>
+							{% else %}
+								<li>
+									<a href="{{ path('app_login') }}">
+										<i class="ti-user"></i>
+										<span>Login</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('app_register') }}">
+										<i class="fas fa-sign-in-alt"></i>
+										<span>Register</span>
+									</a>
+								</li>
+							{% endif %}
 						</ul>
 					</div>
 				</div>
@@ -87,15 +96,12 @@
 						</li>
 						<li class="">
 							<a class=" nav-link" href="#" data-toggle="dropdown">Products</a>
-
 						</li>
 						<li class="dropdown">
 							<a class=" nav-link" href="#" data-toggle="dropdown">Blog</a>
-
 						</li>
 						<li class="">
 							<a class=" nav-link" href="#" data-toggle="dropdown">Shop</a>
-
 						</li>
 						<li>
 							<a class="nav-link nav_item" href="#">Contact Us</a>
@@ -149,7 +155,6 @@
 											<span class="price_symbole">$</span>
 										</span>78.00</span>
 								</li>
-
 							</ul>
 							<div class="cart_footer">
 								<p class="cart_total">
