@@ -85,15 +85,9 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
-        "database-setup": [
-            "php bin/console doctrine:database:drop --if-exists --force",
-            "php bin/console doctrine:database:create",
-            "php bin/console doctrine:schema:update --force"
-            
-        ],
+        
         "post-install-cmd": [
-            "@auto-scripts",
-            "@database-setup"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
