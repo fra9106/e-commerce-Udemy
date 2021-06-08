@@ -16,8 +16,6 @@ class AddressController extends AbstractController
 {
     /**
      * @Route("/addresses", name="app_addresses", methods={"GET"})
-     * 
-     * @IsGranted("ROLE_USER")
      */
     public function addresses(AddressRepository $addresses): Response
     {
@@ -29,7 +27,6 @@ class AddressController extends AbstractController
     /**
      * @Route("/new", name="app_address_new", methods={"GET","POST"})
      * 
-     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -53,9 +50,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_address_show", methods={"GET"})
-     * 
-     * @IsGranted("ROLE_USER")
+     * @Route("/show/{id}", name="app_address_show", methods={"GET"})
      */
     public function show(Address $address): Response
     {
@@ -66,8 +61,6 @@ class AddressController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_address_edit", methods={"GET","POST"})
-     * 
-     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Address $address): Response
     {
@@ -87,9 +80,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_address_delete", methods={"POST"})
-     * 
-     * @IsGranted("ROLE_USER")
+     * @Route("/delete/{id}", name="app_address_delete", methods={"POST"})
      */
     public function delete(Request $request, Address $address): Response
     {
