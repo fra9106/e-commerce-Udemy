@@ -27,6 +27,7 @@ class AddressController extends AbstractController
     /**
      * @Route("/new", name="app_address_new", methods={"GET","POST"})
      * 
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -40,6 +41,8 @@ class AddressController extends AbstractController
             $entityManager->persist($address);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre adresse a bien été créé 🤗 !');
+
             return $this->redirectToRoute('app_addresses');
         }
 
@@ -50,17 +53,9 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="app_address_show", methods={"GET"})
-     */
-    public function show(Address $address): Response
-    {
-        return $this->render('address/show.html.twig', [
-            'address' => $address,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="app_address_edit", methods={"GET","POST"})
+     * 
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Address $address): Response
     {
@@ -69,6 +64,8 @@ class AddressController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Votre adresse a bien été modifié 🤗 !');
 
             return $this->redirectToRoute('app_addresses');
         }
@@ -81,6 +78,8 @@ class AddressController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="app_address_delete", methods={"POST"})
+     * 
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Address $address): Response
     {
@@ -88,6 +87,8 @@ class AddressController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($address);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Votre adresse a bien été supprimée 🤗 !');
         }
 
         return $this->redirectToRoute('app_addresses');

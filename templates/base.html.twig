@@ -19,6 +19,25 @@
     </head>
 		<body>
 			{% include "shared/header.html.twig" %}
+			<div class="container pt-5"><br><br>
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success text-center" role="alert">
+					{{ message}}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('danger') %}
+				<div class="alert alert-danger text-center" role="alert">
+					{{ message }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endfor %}
+			
+		</div>
 
 			{% block body %}{% endblock %}
             
