@@ -9,8 +9,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
-    {
+        public function load(ObjectManager $manager)
+        {
         $category1 = new Category();
         $category1->setName("Bonnets");
 
