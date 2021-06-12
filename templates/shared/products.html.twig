@@ -2,7 +2,8 @@
 	<div class="product">
 		<div class="product_img">
 			<a href="">
-				<img height="300" src="/assets/uploads/products/{{ product.image }}" alt="product_img1">
+				
+				<img class="h-100 w-100" src="{{ asset('assets/uploads/products/' ~ product.image) }}" alt="product_img1">
 			</a>
 			<div class="product_action_box">
 				<ul class="list_none pr_action_btn">
