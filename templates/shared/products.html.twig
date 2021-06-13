@@ -2,7 +2,7 @@
 	<div class="product">
 		<div class="product_img">
 			<a href="">
-				<img height="300" src="{{ asset('/assets/uploads/products/' ~ product.image) }}" alt="image : {{product.name}}">
+				<img height="300" src="{{ asset('assets/uploads/products/' ~ product.image) }}" alt="image : {{product.name}}">
 			</a>
 			<div class="product_action_box">
 				<ul class="list_none pr_action_btn">
@@ -17,7 +17,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="" class="">
+						<a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="">
 							<i class="icon-magnifier-add"></i>
 						</a>
 					</li>
