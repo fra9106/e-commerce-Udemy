@@ -36,7 +36,8 @@ class CartService
      */
     protected function saveCart(array $cart)
     {
-        return $this->session->set('cart', $cart);
+        $this->session->set('cart', $cart);
+        $this->session->set('cartData', $this->getFullCart());
     }
     
     /**
@@ -49,6 +50,12 @@ class CartService
         $this->saveCart([]);
     }
 
+    /**
+     * remove
+     *
+     * @param integer $id
+     * @return void
+     */
     public function remove(int $id)
     {
         $cart = $this->getCart();
