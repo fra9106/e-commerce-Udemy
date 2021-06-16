@@ -41,6 +41,9 @@ class HomeController extends AbstractController
      */
     public function show(Product $product) : Response
     {
+        if (!$product){
+            throw $this->createNotFoundException("Ce produit n'existe pas ! 🤔");
+        }
         return $this->render('home/product_show.html.twig', [
             'product' => $product
         ]);
