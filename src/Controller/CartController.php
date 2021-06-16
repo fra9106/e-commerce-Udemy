@@ -44,7 +44,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * supprime un produit
+     * supprime une quantité d'un produit
      * 
      * @Route("/cart/deleteProductInCart/{id}", name="app_deleteProductInCart")
      *
@@ -53,6 +53,19 @@ class CartController extends AbstractController
     public function deleteProductInCart($id) : Response
     {
         $this->cartService->deleteProductInCart($id);
+        return $this->redirectToRoute('app_cart');
+    }
+
+    /**
+     * supprime un produit dans le panier
+     *
+     * @Route("/cart/remove/{id}", name="app_remove_product")
+     * 
+     * @return Response
+     */
+    public function remove($id) : Response
+    {
+        $this->cartService->remove($id);
         return $this->redirectToRoute('app_cart');
     }
 }
