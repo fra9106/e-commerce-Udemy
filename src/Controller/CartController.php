@@ -24,6 +24,9 @@ class CartController extends AbstractController
     public function index(): Response
     {
         $cart = $this->cartService->getFullCart();
+        if(!$cart) {
+            return $this->redirectToRoute('app_homepage');
+        }
         return $this->render('cart/cart.html.twig', [
             'cart' => $cart
         ]);

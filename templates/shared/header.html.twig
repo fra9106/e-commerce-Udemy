@@ -150,7 +150,7 @@
 											<a href="{{ path('app_remove_product', {'id': element.product.id}) }}" class="item_remove">
 												<i class="ion-close"></i>
 											</a>
-											<a href="#"><img src="{{ asset('assets/uploads/products/' ~ element.product.image) }}" alt="{{element.product.name}}">{{ element.product.name }}</a>
+											<a href="{{ path('app_product_show', {'slug': element.product.slug}) }}"><img src="{{ asset('assets/uploads/products/' ~ element.product.image) }}" alt="{{element.product.name}}">{{ element.product.name }}</a>
 											<span class="cart_quantity">
 												{{ element.quantity }}
 												X
@@ -168,11 +168,11 @@
 							{% if app.session.get('cartData') %}
 								<div class="cart_footer">
 									<p class="cart_total">
-										<strong>Subtotal HT:</strong>
+										<strong>Subtotal TTC :</strong>
 										<span class="cart_price">
 											<span class="price_symbole"></span>
 										</span>
-										{{ subTotal }}
+										{{ subTotal * 1.2 | round(2, 'floor')}}
 										€</p>
 									<p class="cart_buttons">
 										<a href="{{ path('app_cart') }}" class="btn btn-fill-line rounded-0 view-cart">View Cart</a>
