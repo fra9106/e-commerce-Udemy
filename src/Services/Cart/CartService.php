@@ -126,7 +126,7 @@ class CartService
 
                 
             }
-            $fullCart[] =
+            $fullCart['products'][] =
                 [
                     "quantity" => $quantity,
                     "product" => $product

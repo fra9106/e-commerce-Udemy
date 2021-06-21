@@ -9,31 +9,33 @@
 
 	<div class="section">
 		<div class="container">
-			{{ form_start(checkout, {action: path('app_checkout_confirm')}) }}
+			{{ form_start(checkout)}}
 			<div class="row">
 				<div class="col-md-6">
 					<div class="heading_s1">
-						<h4>Your delivery Address</h4>
-						<div class="content">
-							{{ form_widget(checkout.address) | replace({'[brouette]' : '<br>',}) | raw}}
-						</div>
-					</div>
-					<a class="btn btn-border-fill btn-block" href="{{ path('app_address_new') }}">add new address</a><br>
-					<div class="heading_s1">
-						<h4>Your carrier</h4>
-						<div class="content">
-							{{ form_widget(checkout.carrier) | replace({'[brouette]' : '<br>',}) | raw}}
+						<h4>Please verify your delivery Address</h4>
+						<div class="content mt-3">
+							{{ address | replace({'[brouette]' : '<br>',}) | raw}}
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_address_edit', {'id': address.id }) }}">Edit address</a>
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout') }}">Change address</a><br>
 						</div>
 					</div>
 					<div class="heading_s1">
-						<h4>Additional information</h4>
-						<div class="form-group mb-0">
-							{{ form_widget(checkout.informations)}}
+						<h4>Please verify your carrier</h4>
+						<div class="content mt-3">
+							{{ carrier | replace({'[brouette]' : '<br>',}) | raw}}
 						</div>
 					</div>
+					{% if informations %}
+						<div class="heading_s1">
+							<h4>Please verify additional information</h4>
+							<div class="form-group mb-0">
+								{{ form_widget(checkout.informations)}}
+							</div>
+						</div>
+					{% endif %}
 				</div>
-
-				<div class="col-md-6">
+                <div class="col-md-6">
 					<div class="order_review">
 						<div class="heading_s1">
 							<h4>Your Orders</h4>
@@ -60,9 +62,7 @@
 												€</td>
 										</tr>
 									{% endfor %}
-
-
-								</tbody>
+                                </tbody>
 								<tfoot>
 									<tr>
 										<th>SubTotal HT</th>
@@ -75,8 +75,14 @@
 											€</td>
 									</tr>
 									<tr>
+										<th>Shipping
+											{{ carrier.name }}</th>
+										<td class="product-subtotal">{{ carrier.price /100 }}
+											€</td>
+									</tr>
+									<tr>
 										<th>Total</th>
-										<td class="product-subtotal">{{ (subTotal * 1.2)|round(2, 'floor') }}
+										<td class="product-subtotal">{{ (subTotal * 1.2 + carrier.price /100) |round(2, 'floor') }}
 											€</td>
 									</tr>
 								</tfoot>
@@ -86,13 +92,14 @@
 							<div class="heading_s1">
 								<h4>Payment</h4>
 							</div>
-
+							<button type="submit" id="checkout-button" class="btn btn-fill-out btn-block">Paid |
+								{{ (subTotal * 1.2 + carrier.price /100) |round(2, 'floor') }}
+								€</button>
 						</div>
-						<button type="submit" id="checkout-button" class="btn btn-fill-out btn-block">Place Order</button>
+
 					</div>
 				</div>
 			</div>
-			{{ form_end(checkout)}}
 		</div>
 	</div>
 {% endblock %}
