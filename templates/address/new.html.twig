@@ -15,6 +15,24 @@
                             <div class="heading_s1">
                                 <h3>Add Address</h3>
                             </div>
+                            <div class="message-flash">
+                            {% for message in app.flashes('success_message_checkout') %}
+				<div class="alert alert-success text-center" role="alert">
+					{{ message}}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('alert_message_checkout') %}
+				<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+					{{ message }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endfor %}
+                            </div>
                             <div class="content">
                                 {{ include('address/_form.html.twig') }}
                                 <a class="btn btn-fill-out btn-block mt-2" href="{{ path('app_addresses') }}">back to account</a>

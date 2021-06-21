@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Address;
 use App\Form\AddressType;
 use App\Repository\AddressRepository;
+use App\Services\Cart\CartService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +30,7 @@ class AddressController extends AbstractController
      * 
      * @IsGranted("ROLE_USER")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CartService $cartService): Response
     {
         $address = new Address();
         $address->setUser($this->getUser());
@@ -40,6 +41,10 @@ class AddressController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($address);
             $entityManager->flush();
+
+            if ($cartService->getFullCart()) {
+                return $this->redirectToRoute('app_checkout');
+            }
 
             $this->addFlash('success', 'Votre adresse a bien été créé 🤗 !');
 

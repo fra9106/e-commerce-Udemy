@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Carrier;
 use App\Entity\Product;
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
@@ -329,6 +330,35 @@ class AppFixtures extends Fixture
                 ->setCreatedAt(new \DateTime());
 
         $manager->persist($product);
+
+        $carrier1 = new Carrier;
+
+        $carrier1->setName('UPS')
+                ->setDescription('Ouvert du lundi au Samedi')
+                ->setPrice(7000)
+                ->setCreatedAt(new \DateTime());
+
+        $manager->persist($carrier1);
+
+        $carrier2 = new Carrier;
+
+        $carrier2->setName('ChronoPost')
+                ->setDescription('Ouvert du lundi au Samedi')
+                ->setPrice(5000)
+                ->setCreatedAt(new \DateTime());
+                
+
+        $manager->persist($carrier2);
+
+        $carrier3 = new Carrier;
+
+        $carrier3->setName('Colissimo')
+                ->setDescription('Ouvert du lundi au Samedi')
+                ->setPrice(3000)
+                ->setCreatedAt(new \DateTime());
+
+        $manager->persist($carrier3);
+
 
         $manager->flush();
         }
