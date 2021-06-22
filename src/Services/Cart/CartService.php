@@ -84,7 +84,7 @@ class CartService
     }
 
     /**
-     * supprime un un produit dans le panier
+     * supprime un produit dans le panier
      *
      * @return void
      */

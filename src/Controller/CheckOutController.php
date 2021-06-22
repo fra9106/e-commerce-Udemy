@@ -7,15 +7,18 @@ use App\Services\Cart\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CheckOutController extends AbstractController
 {
     protected $cartService;
+    protected $session;
 
-    public function __construct(CartService $cartService)
+    public function __construct(CartService $cartService, SessionInterface $session)
     {
         $this->cartService = $cartService;
+        $this->session = $session;
     }
 
     /**
@@ -74,15 +77,19 @@ class CheckOutController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid()) {
+        if ( $form->isSubmitted() && $form->isValid() || $this->session->get('checkout_data')) {
 
-            $data = $form->getData();
+            if ($this->session->get('checkout_data')) {
+                $data = $this->session->get('checkout_data');
+            }else{
+                $data = $form->getData();
+                $this->session->set('checkout_data', $data);
+            }
+            
 
             $address = $data['address'];
             $carrier = $data['carrier'];
             $informations = $data['informations'];
-
-            //dd($data);
 
             return $this->render('check_out/confirm.html.twig', [
                 'cart' => $cart,
