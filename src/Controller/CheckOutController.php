@@ -41,6 +41,10 @@ class CheckOutController extends AbstractController
         
         }
 
+        if ($this->session->get('checkout_data')) { // vérifie s'il y a tjrs une session
+             return $this->redirectToRoute('app_checkout_confirm'); // renvoi sur la page de confirmation
+        }
+
         $form = $this->createForm(CheckoutType::class, null, ['user' =>$user]);
 
         $form->handleRequest($request);
@@ -103,5 +107,16 @@ class CheckOutController extends AbstractController
 
         return $this->redirectToRoute('app_checkout');
 
+    }
+
+    /**
+     * @Route("/checkout/edit", name="app_checkout_edit")
+     *
+     * @return Response
+     */
+    public function checkoutEdit(): Response
+    {
+        $this->session->set('checkout_data',[]);
+        return $this->redirectToRoute("app_checkout");
     }
 }

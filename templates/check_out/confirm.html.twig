@@ -17,14 +17,14 @@
 						<div class="content mt-3">
 							{{ address | replace({'[brouette]' : '<br>',}) | raw}}
 							<a class="btn btn-fill-out mt-1" href="{{ path('app_address_edit', {'id': address.id }) }}">Edit address</a>
-							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout') }}">Change address</a><br>
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout_edit') }}">Change address</a><br>
 						</div>
 					</div>
 					<div class="heading_s1">
 						<h4>Please verify your carrier</h4>
 						<div class="content mt-3">
 							{{ carrier | replace({'[brouette]' : '<br>',}) | raw}}
-							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout') }}">Change carrier</a><br>
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout_edit') }}">Change carrier</a><br>
 						</div>
 					</div>
 					{% if informations %}

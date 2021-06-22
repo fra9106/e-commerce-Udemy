@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AddressController extends AbstractController
 {
 
-    protected $session;
+    private $session;
 
     public function __construct(SessionInterface $session )
     {
@@ -69,7 +69,6 @@ class AddressController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_address_edit", methods={"GET","POST"})
      * 
-     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Address $address): Response
     {
