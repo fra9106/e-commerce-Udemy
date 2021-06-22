@@ -31,10 +31,9 @@ class CartService
     /**
      * sauvegarde le panier avec son contenu (update)
      *
-     * @param array $cart
      * @return void
      */
-    protected function saveCart(array $cart)
+    protected function saveCart($cart)
     {
         $this->session->set('cart', $cart);
         $this->session->set('cartData', $this->getFullCart());
@@ -53,7 +52,6 @@ class CartService
     /**
      * remove
      *
-     * @param integer $id
      * @return void
      */
     public function remove(int $id)
@@ -67,17 +65,19 @@ class CartService
     /**
      * ajout d'un produit dans le panier
      *
-     * @param integer $id
      * @return void
      */
-    public function addProductInCart(int $id)
+    public function addProductInCart($id)
     {
         $cart = $this->getCart();
 
-        if(!isset($cart[$id])) {
-            $cart[$id] = 0;
+        if(isset($cart[$id])) {
+            
+            $cart[$id]++;
+        }else{
+            $cart[$id] = 1;
         }
-        $cart[$id]++;
+        
 
         $this->saveCart($cart);
     }
@@ -85,7 +85,6 @@ class CartService
     /**
      * supprime un un produit dans le panier
      *
-     * @param integer $id
      * @return void
      */
     public function deleteProductInCart(int $id) {
@@ -121,16 +120,17 @@ class CartService
         foreach ($cart as $id => $quantity) {
             $product = $this->productRepository->find($id);
 
-            if (!$product) {
-                continue;
-
-                
-            }
-            $fullCart['products'][] =
+            if ($product) {
+                $fullCart[]=
                 [
                     "quantity" => $quantity,
                     "product" => $product
                 ];
+
+            }else{
+                $this->deleteProductInCart($id);
+            }
+            
         }
         return $fullCart;
         

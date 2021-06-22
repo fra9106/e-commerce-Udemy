@@ -138,6 +138,7 @@
 								{% for element in app.session.get('cartData') %}
 									{% set quantity = quantity + element.quantity %}
 								{% endfor %}
+								
 								{{ quantity }}</span>
 						</a>
 						<div class="cart_box dropdown-menu dropdown-menu-right">

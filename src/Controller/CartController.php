@@ -24,6 +24,7 @@ class CartController extends AbstractController
     public function index(): Response
     {
         $cart = $this->cartService->getFullCart();
+        //dd($cart);
         if(!$cart) {
             return $this->redirectToRoute('app_homepage');
         }
@@ -33,7 +34,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * ajoute un produit
+     * ajoute un produit dans le panier
      * 
      * @Route("/cart/addProductInCart/{id}", name="app_addProductInCart")
      *
