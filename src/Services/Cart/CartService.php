@@ -9,6 +9,7 @@ class CartService
 {
     protected $session;
     protected $productRepository;
+    protected $tva = 0.2;
     
 
     public function __construct(SessionInterface $session, ProductRepository $productRepository)
@@ -117,21 +118,36 @@ class CartService
 
         $fullCart = [];
 
+        $quantity_cart = 0;
+
+        $subTotal = 0;
+
         foreach ($cart as $id => $quantity) {
             $product = $this->productRepository->find($id);
 
             if ($product) {
-                $fullCart[]=
+                $fullCart['products'][]=
                 [
                     "quantity" => $quantity,
                     "product" => $product
                 ];
+
+                $quantity_cart += $quantity;
+                $subTotal += $quantity * $product->getPrice()/100;
 
             }else{
                 $this->deleteProductInCart($id);
             }
             
         }
+
+        $fullCart['data'] = [
+            "quantity_cart" => $quantity_cart,
+            "subTotalHT" => $subTotal,
+            "Taxe" => round($subTotal * $this->tva,2),
+            "subTotalTTC" => round(($subTotal + ($subTotal * $this->tva)), 2)
+        ];
+
         return $fullCart;
         
     }
