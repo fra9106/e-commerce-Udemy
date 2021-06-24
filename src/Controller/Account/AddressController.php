@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Account;
 
 use App\Entity\Address;
 use App\Form\AddressType;
@@ -69,6 +69,7 @@ class AddressController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_address_edit", methods={"GET","POST"})
      * 
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Address $address): Response
     {

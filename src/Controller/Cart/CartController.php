@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Cart;
 
 use App\Services\Cart\CartService;
 use Symfony\Component\HttpFoundation\Response;

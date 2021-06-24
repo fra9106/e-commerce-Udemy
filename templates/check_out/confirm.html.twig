@@ -3,6 +3,10 @@
 {% block title %}Hello CheckOutController!
 {% endblock %}
 
+{% block scriptStripe %}
+	<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
 {% block body %}
 
 	{% include "shared/title_section.html.twig" with  {'name': 'Checkout : '} %}
@@ -103,4 +107,56 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript">
+		var stripe = Stripe("pk_test_51IlrB5FbsfZOypKxsFUS2oxm824bjM5tUjJEQaSsdxHqlGNLkMFINF3Mf55u1lPVqfKJQjXny4LIYcPv2ArqHVqu00ebx4A92a");
+
+    var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+
+      fetch("/create-checkout-session", {
+
+        method: "POST",
+
+      })
+
+        .then(function (response) {
+
+          return response.json();
+
+        })
+
+        .then(function (session) {
+
+          return stripe.redirectToCheckout({ sessionId: session.id });
+
+        })
+
+        .then(function (result) {
+
+          // If redirectToCheckout fails due to a browser or network
+
+          // error, you should display the localized error message to your
+
+          // customer using error.message.
+
+          if (result.error) {
+
+            alert(result.error.message);
+
+          }
+
+        })
+
+        .catch(function (error) {
+
+          console.error("Error:", error);
+
+        });
+
+    });
+	</script>
 {% endblock %}

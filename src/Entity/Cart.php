@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PurchaseRepository;
+use App\Repository\CartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PurchaseRepository::class)
+ * @ORM\Entity(repositoryClass=CartRepository::class)
  */
-class Purchase
+class Cart
 {
     /**
      * @ORM\Id
@@ -60,12 +60,12 @@ class Purchase
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=PurchaseDetail::class, mappedBy="purchase")
+     * @ORM\OneToMany(targetEntity=CartDetail::class, mappedBy="Cart")
      */
-    private $purchaseDetails;
+    private $CartDetails;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="purchases")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Carts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -92,7 +92,7 @@ class Purchase
 
     public function __construct()
     {
-        $this->purchaseDetails = new ArrayCollection();
+        $this->CartDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,29 +197,29 @@ class Purchase
     }
 
     /**
-     * @return Collection|PurchaseDetail[]
+     * @return Collection|CartDetail[]
      */
-    public function getPurchaseDetails(): Collection
+    public function getCartDetails(): Collection
     {
-        return $this->purchaseDetails;
+        return $this->CartDetails;
     }
 
-    public function addPurchaseDetail(PurchaseDetail $purchaseDetail): self
+    public function addCartDetail(CartDetail $CartDetail): self
     {
-        if (!$this->purchaseDetails->contains($purchaseDetail)) {
-            $this->purchaseDetails[] = $purchaseDetail;
-            $purchaseDetail->setPurchase($this);
+        if (!$this->CartDetails->contains($CartDetail)) {
+            $this->CartDetails[] = $CartDetail;
+            $CartDetail->setCart($this);
         }
 
         return $this;
     }
 
-    public function removePurchaseDetail(PurchaseDetail $purchaseDetail): self
+    public function removeCartDetail(CartDetail $CartDetail): self
     {
-        if ($this->purchaseDetails->removeElement($purchaseDetail)) {
+        if ($this->CartDetails->removeElement($CartDetail)) {
             // set the owning side to null (unless already changed)
-            if ($purchaseDetail->getPurchase() === $this) {
-                $purchaseDetail->setPurchase(null);
+            if ($CartDetail->getCart() === $this) {
+                $CartDetail->setCart(null);
             }
         }
 

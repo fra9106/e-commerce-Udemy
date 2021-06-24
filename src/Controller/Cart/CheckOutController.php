@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Cart;
 
 use App\Form\CheckoutType;
 use App\Services\Cart\CartService;
+use App\Services\Purchases\PurchaseService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class CheckOutController extends AbstractController
         $user = $this->getUser();
 
         $cart = $this->cartService->getFullCart();
-        //dd($cart);
+
         if (!isset($cart['products'])) {
             return $this->redirectToRoute('app_homepage');
         }
@@ -61,7 +62,7 @@ class CheckOutController extends AbstractController
      *
      * @return Response
      */
-    public function confirm(Request $request) : Response 
+    public function confirm(Request $request, PurchaseService $purchaseService) : Response 
     {
         $user = $this->getUser();
         $cart = $this->cartService->getFullCart();
@@ -94,6 +95,11 @@ class CheckOutController extends AbstractController
             $address = $data['address'];
             $carrier = $data['carrier'];
             $informations = $data['informations'];
+
+            //save cart
+            $cart['checkout'] = $data;
+            $reference =  $purchaseService->saveCart($cart,$user);
+            //dd($reference);
 
             return $this->render('check_out/confirm.html.twig', [
                 'cart' => $cart,
