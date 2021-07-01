@@ -26,7 +26,7 @@ class StripeCheckoutSessionController extends AbstractController
       return $this->redirectToRoute('app_homepage');
     }
 
-    $purchase = $purchaseService->createPurchase($cart);
+    $purchase = $purchaseService->createPurchase($cart); //on sauvegarde la commande du client
 
     Stripe::setApiKey('sk_test_51IlrB5FbsfZOypKxHvt20Mmgc2wf8B5a0XnE5OL68A6rSuwnTQkbNfQP1BcDvAIT7VpZZH6o2QlRqp6wgifCoMB200gsNzGNBv');
 
@@ -47,7 +47,7 @@ class StripeCheckoutSessionController extends AbstractController
 
     ]);
 
-    $purchase->setStripeCheckoutSessionId($checkout_session->id);
+    $purchase->setStripeCheckoutSessionId($checkout_session->id); // on sauvegarde le CHECKOUT_SESSION_ID en bdd
 
     $manager->flush();
 

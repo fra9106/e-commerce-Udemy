@@ -13,16 +13,16 @@
                 <div class="text-center order_complete">
                 	<i class="fas fa-check-circle"></i>
                     <div class="heading_s1">
-                      <h3>Think you Mr ##. Payment made successfully !</h3>
+                      <h3>Think you Mr {{ app.user.fullName }} your payment made successfully !</h3>
                       <div class="">
-                        <div>Payment for order number <strong>#125</strong>  has been accepted.</div>
+                        <div>Payment for order number <strong>{{ purchase.reference }}</strong>  has been accepted.</div>
                         <div>Your payment is currently “pending verification”.
-                            Payments are usually verified within 1 hour.
+                            Payments are usually verified with in 1 hour.
                             After verification, the seller begins to process your order.
                             During this lapse of time, you will not be able to change your order.</div>
                         <div>
                           <div>Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You will receive an email confirmation when your order is completed.</div>
-                          <a href="" class="btn btn-fill-out">Continue Shopping</a>
+                          <a href="/" class="btn btn-fill-out">Continue Shopping</a>
                         </div>
                       </div>
                       <div >

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StripePaymentSuccessController extends AbstractController
 {
     /**
-     * @Route("/stripe-payment-success/{StripeCheckoutSessionId}", name="app_stripe_payment_success")
+     * @Route("/stripe-payment-success/{stripeCheckoutSessionId}", name="app_stripe_payment_success")
      */
     public function index(?Purchase $purchase, CartService $cartService, EntityManagerInterface $manager): Response
     {
