@@ -16,13 +16,11 @@
 		<link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.png">
         <link rel="stylesheet" href="/assets/style.css">
         {% endblock %}
-		{% block scriptStripe %}
-			<script src="https://js.stripe.com/v3/"></script>
-		{% endblock %}
+		{% block scriptStripe %}{% endblock scriptStripe %}
     </head>
 		<body>
 			{% include "shared/header.html.twig" %}
-			<div class="container pt-5"><br><br>
+		<div class="container pt-5"><br><br>
 			{% for message in app.flashes('success') %}
 				<div class="alert alert-success text-center" role="alert">
 					{{ message}}
@@ -40,16 +38,11 @@
 				</div>
 			{% endfor %}
 			
-		</div>
-
-			{% block body %}{% endblock %}
-            
+		{% block body %}{% endblock %}
+        </div>
+		
             {% include "shared/footer.html.twig" %}
 
-			
-
-
-			{% block javascripts %}
 				<script src="/assets/js/jquery-1.12.4.min.js"></script>
 				<script src="/assets/js/popper.min.js"></script>
 				<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -64,57 +57,6 @@
 				<script src="/assets/js/slick.min.js"></script>
 				<script src="/assets/js/jquery.elevatezoom.js"></script>
 				<script src="/assets/js/scripts.js"></script>
-
-				<script type="text/javascript">
-					var stripe = Stripe("pk_test_51IlrB5FbsfZOypKxsFUS2oxm824bjM5tUjJEQaSsdxHqlGNLkMFINF3Mf55u1lPVqfKJQjXny4LIYcPv2ArqHVqu00ebx4A92a");
-
-    var checkoutButton = document.getElementById("checkout-button");
-
-    checkoutButton.addEventListener("click", function () {
-
-      fetch("/create-checkout-session", {
-
-        method: "POST",
-
-      })
-
-        .then(function (response) {
-
-          return response.json();
-
-        })
-
-        .then(function (session) {
-
-          return stripe.redirectToCheckout({ sessionId: session.id });
-
-        })
-
-        .then(function (result) {
-
-          // If redirectToCheckout fails due to a browser or network
-
-          // error, you should display the localized error message to your
-
-          // customer using error.message.
-
-          if (result.error) {
-
-            alert(result.error.message);
-
-          }
-
-        })
-
-        .catch(function (error) {
-
-          console.error("Error:", error);
-
-        });
-
-    });
-				</script>
-
-			{% endblock %}
+				{% block javascripts %}{% endblock %}
 		</body>
 	</html>

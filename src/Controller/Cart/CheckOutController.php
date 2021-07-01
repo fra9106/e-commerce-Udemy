@@ -75,7 +75,6 @@ class CheckOutController extends AbstractController
 
             $this->addFlash('success_message_checkout', "Merci d'entrer une adresse pour pouvoir continuer 🙂");
             return $this->redirectToRoute('app_address_new');
-        
         }
 
         $form = $this->createForm(CheckoutType::class, null, ['user' =>$user]);
@@ -103,10 +102,11 @@ class CheckOutController extends AbstractController
 
             return $this->render('check_out/confirm.html.twig', [
                 'cart' => $cart,
-                'checkout' => $form->createView(),
                 'address' => $address,
                 'carrier' => $carrier,
-                'informations' => $informations
+                'informations' => $informations,
+                'reference' => $reference,
+                'checkout' => $form->createView(),
             ]);
 
         }
@@ -116,7 +116,7 @@ class CheckOutController extends AbstractController
     }
 
     /**
-     * @Route("/checkout/edit", name="app_checkout_edit")
+     * @Route("/checkout/change", name="app_checkout_change")
      *
      * @return Response
      */

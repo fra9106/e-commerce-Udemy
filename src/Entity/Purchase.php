@@ -90,6 +90,11 @@ class Purchase
      */
     private $subTotalTtc;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripeCheckoutSessionId;
+
     public function __construct()
     {
         $this->purchaseDetails = new ArrayCollection();
@@ -282,6 +287,18 @@ class Purchase
     public function setSubTotalTtc(float $subTotalTtc): self
     {
         $this->subTotalTtc = $subTotalTtc;
+
+        return $this;
+    }
+
+    public function getStripeCheckoutSessionId(): ?string
+    {
+        return $this->stripeCheckoutSessionId;
+    }
+
+    public function setStripeCheckoutSessionId(?string $stripeCheckoutSessionId): self
+    {
+        $this->stripeCheckoutSessionId = $stripeCheckoutSessionId;
 
         return $this;
     }

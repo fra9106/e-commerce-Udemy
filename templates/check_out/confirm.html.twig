@@ -5,7 +5,7 @@
 
 {% block scriptStripe %}
 	<script src="https://js.stripe.com/v3/"></script>
-{% endblock %}
+{% endblock scriptStripe %}
 
 {% block body %}
 
@@ -13,29 +13,29 @@
 
 	<div class="section">
 		<div class="container">
-			{{ form_start(checkout)}}
+	
 			<div class="row">
 				<div class="col-md-6">
 					<div class="heading_s1">
 						<h4>Please verify your delivery Address</h4>
-						<div class="content mt-3">
+						<div class="content mt-3" id="address">
 							{{ address | replace({'[brouette]' : '<br>',}) | raw}}
-							<a class="btn btn-fill-out mt-1" href="{{ path('app_address_edit', {'id': address.id }) }}">Edit address</a>
-							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout_edit') }}">Change address</a><br>
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_address_edit',{'id': address.id}) }}">Edit address</a>
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout_change') }}">Change address</a><br>
 						</div>
 					</div>
 					<div class="heading_s1">
 						<h4>Please verify your carrier</h4>
-						<div class="content mt-3">
+						<div class="content mt-3" id="carrier">
 							{{ carrier | replace({'[brouette]' : '<br>',}) | raw}}
-							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout_edit') }}">Change carrier</a><br>
+							<a class="btn btn-fill-out mt-1" href="{{ path('app_checkout_change') }}">Change carrier</a><br>
 						</div>
 					</div>
 					{% if informations %}
 						<div class="heading_s1">
 							<h4>Please verify additional information</h4>
-							<div class="form-group mb-0">
-								{{ form_widget(checkout.informations)}}
+							<div class="form-group mb-0" id="informations">
+								{{ informations }}
 							</div>
 						</div>
 					{% endif %}
@@ -109,7 +109,7 @@
 	</div>
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
 	<script type="text/javascript">
 		var stripe = Stripe("pk_test_51IlrB5FbsfZOypKxsFUS2oxm824bjM5tUjJEQaSsdxHqlGNLkMFINF3Mf55u1lPVqfKJQjXny4LIYcPv2ArqHVqu00ebx4A92a");
 
@@ -117,7 +117,7 @@
 
     checkoutButton.addEventListener("click", function () {
 
-      fetch("/create-checkout-session", {
+      fetch("/create-checkout-session/{{ reference }}", {
 
         method: "POST",
 

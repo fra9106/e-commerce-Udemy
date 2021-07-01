@@ -2,6 +2,9 @@
 
 namespace App\Controller\Stripe;
 
+use App\Entity\Purchase;
+use App\Services\Cart\CartService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,13 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class StripePaymentSuccessController extends AbstractController
 {
     /**
-     * @Route("/stripe-payment-success", name="app_stripe_payment_success")
+     * @Route("/stripe-payment-success/{StripeCheckoutSessionId}", name="app_stripe_payment_success")
      */
-    public function index(): Response
+    public function index(?Purchase $purchase, CartService $cartService, EntityManagerInterface $manager): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/Stripe/StripePaymentSuccessController.php',
+        if(!$purchase || $purchase->getUser() !== $this->getUser()) {
+            return $this->redirectToRoute('app_homepage');
+        }
+
+        if(!$purchase->getIsPaid()) {
+            $purchase->setIsPaid(true);
+            $manager->flush();
+            $cartService->empty();
+        }
+
+
+        return $this->render('stripe/stripe_success_payment.html.twig', [
+            'purchase' => $purchase
         ]);
     }
 }
