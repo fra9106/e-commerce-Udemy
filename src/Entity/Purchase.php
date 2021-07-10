@@ -143,7 +143,7 @@ class Purchase
 
     public function getCarrierPrice(): ?float
     {
-        return $this->carrierPrice;
+        return $this->carrierPrice*0.10;
     }
 
     public function setCarrierPrice(float $carrierPrice): self
@@ -257,7 +257,7 @@ class Purchase
 
     public function getSubTotalHt(): ?float
     {
-        return $this->subTotalHt;
+        return $this->subTotalHt*100;
     }
 
     public function setSubTotalHt(float $subTotalHt): self
@@ -281,7 +281,7 @@ class Purchase
 
     public function getSubTotalTtc(): ?float
     {
-        return $this->subTotalTtc;
+        return $this->subTotalTtc*100;
     }
 
     public function setSubTotalTtc(float $subTotalTtc): self
